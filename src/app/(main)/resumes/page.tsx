@@ -37,12 +37,7 @@ export default async function Page() {
           </p>
         </div>
 
-        {/* <Button asChild>
-          <Link href="/editor" className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            New Resume
-          </Link>
-        </Button> */}
+      
       </div>
 
       {/* ---------------- Content ---------------- */}

@@ -1,8 +1,6 @@
 "use server";
 
 import openai from "@/lib/openai";
-// import { canUseAITools } from "@/lib/permissions";
-// import { getUserSubscriptionLevel } from "@/lib/subscription";
 import {
   GenerateSummaryInput,
   generateSummarySchema,
@@ -20,12 +18,6 @@ export async function generateSummary(input: GenerateSummaryInput) {
     throw new Error("Unauthorized");
   }
 
-  //   const subscriptionLevel = await getUserSubscriptionLevel(userId);
-
-  //   if (!canUseAITools(subscriptionLevel)) {
-  //     throw new Error("Upgrade your subscription to use this feature");
-  //   }
-  // this is for validadtion here parse dont mean we convert to string
   const { jobTitle, workExperiences, educations, skills } =
     generateSummarySchema.parse(input);
 
@@ -158,11 +150,7 @@ export async function generateWorkExperience(
   console.log("aiResponse", aiResponse);
 
 
-  // 🔑 Short answer
 
-// 👉 This code converts raw AI text into a structured object.
-// 👉 It does NOT put it into the form yet.
-// 👉 It prepares the data so the form can accept it.
 
   return {
     position: aiResponse.match(/Job title: (.*)/)?.[1] || "",

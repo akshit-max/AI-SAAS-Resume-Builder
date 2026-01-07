@@ -40,6 +40,6 @@ export async function deleteResume(id: string) {
 
   if (totalCount === 0) {
     revalidatePath("/editor");
-    redirect("/editor"); // ⛔ stops execution (this must be LAST)
+    redirect("/editor"); 
   }
 }

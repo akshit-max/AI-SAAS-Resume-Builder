@@ -44,22 +44,6 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
     educations: [],
     summary: "",
   });
-  // const [resumeData, setResumeData] = useState<ResumeValues>({
-  //   title: "",
-  //   description: "",
-  //   firstName: "",
-  //   lastName: "",
-  //   jobTitle: "",
-  //   city: "",
-  //   country: "",
-  //   phone: "",
-  //   email: "",
-  //   photo: undefined,
-  //   workExperiences: [],
-  //   educations: [],
-  //   summary: "",
-  // });
-
 
   // ------------------------------->for auto saving<-------------------------------------------------
   // destructure (isSaving,hasUnsavedChanges) from useautosave resume by giving resumedata
@@ -74,8 +58,6 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   // search from url
   const searchParams = useSearchParams();
 
-  //  if get the step from url its ok  otherwise take arrays first element step  /editor?step=personal
-  // it will not get step in url at very beginning so steps[0].key to check take step[1].key
   const currentStep = searchParams.get("step") || steps[0].key;
   function setCurrentStep(step: string) {
     setStep(step);
@@ -131,9 +113,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
            
           />
         </div>
-         {/* <div className="hidden w-1/2 p-4 md:flex overflow-y-auto">
-            <pre>{JSON.stringify(resumeData, null, 2)}</pre>
-          </div>  */}
+        
        
       </main>
 

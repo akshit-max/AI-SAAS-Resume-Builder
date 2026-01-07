@@ -74,28 +74,15 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
     borderStyle,
   } = resumeData;
 
-  // const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
-  // ------------------------------------------------------><------------------------------------------------------------------------------
-  // if photo is a file this func convert it into string url
-  // if photo is a file first we have to generate the url of it as backend want its url and if ita a file then just use it
-  //  photo instanceof File ---->it means photo is a file
-  //  then its url is set in photo src just like normal
 
-  // useEffect(() => {
-  //   const objectUrl = photo instanceof File ? URL.createObjectURL(photo) : "";
-  //   if (objectUrl) setPhotoSrc(objectUrl);
-  //   if (!photo) setPhotoSrc("");
-  //   return () => URL.revokeObjectURL(objectUrl);
-  // }, [photo]);
-
-  // useEffect(() => {
+ 
     const photoSrc =
       photo instanceof File
         ? URL.createObjectURL(photo)
         : typeof photo === "string"
           ? photo
           : "";
-  // }, [photo]);
+ 
 
   
   //  render photo if exists

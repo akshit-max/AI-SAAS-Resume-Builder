@@ -10,23 +10,14 @@ import path from "path";
 import crypto from "crypto";
 
 //----------------------------------------------------------------------
-//  its just like mongodb crud
-// “This function runs ONLY on the server and can be called directly from the client.”
+
 export async function saveResume(values: ResumeValues) {
-  // No API route
-  // No fetch
-  // No axios
-  // fetching id from combined resume
+ 
   const { id } = values;
 
   console.log("received values", values);
 
-  // fetching all from combined resume
-  //  we have just take photo and work experience and education seperate from combined resume as
-  //  photo is a file and other 2 are array
 
-  // resumeSchema.parse()
-  // → validates the incoming data (Zod)
   const { photo, workExperiences, educations, ...resumeValues } =
     resumeSchema.parse(values);
 
@@ -40,27 +31,6 @@ export async function saveResume(values: ResumeValues) {
   }
   // -----------------------------------------------------------------------------
 
-  //   const subscriptionLevel = await getUserSubscriptionLevel(userId);
-
-  //   if (!id) {
-  //     const resumeCount = await prisma.resume.count({ where: { userId } });
-
-  //     if (!canCreateResume(subscriptionLevel, resumeCount)) {
-  //       throw new Error(
-  //         "Maximum resume count reached for this subscription level",
-  //       );
-  //     }
-  //   }
-
-  // Meaning:
-
-  // If ID exists → make sure:
-
-  // Resume exists
-
-  // Resume belongs to THIS user
-
-  // 🔥 This prevents users from editing other people’s resumes.
 
   const existingResume = id
     ? await prisma.resume.findUnique({ where: { id, userId } })
@@ -70,32 +40,7 @@ export async function saveResume(values: ResumeValues) {
     throw new Error("Resume not found");
   }
 
-  //   const hasCustomizations =
-  //     (resumeValues.borderStyle &&
-  //       resumeValues.borderStyle !== existingResume?.borderStyle) ||
-  //     (resumeValues.colorHex &&
-  //       resumeValues.colorHex !== existingResume?.colorHex);
 
-  //   if (hasCustomizations && !canUseCustomizations(subscriptionLevel)) {
-  //     throw new Error("Customizations not allowed for this subscription level");
-  //   }
-
-  //
-
-  // storing Photo in Block storage get it from internet
-
-  //
-  // Meaning:
-
-  // “User uploaded a new image”
-
-  // Then:
-
-  // Delete old photo (if exists)
-
-  // Upload new photo to Vercel Blob
-
-  // Store the URL
 
   let newPhotoUrl: string | undefined | null = undefined;
 
@@ -104,9 +49,7 @@ export async function saveResume(values: ResumeValues) {
       await del(existingResume.photoUrl);
     }
 
-    // const blob = await put(`resume_photos/${path.extname(photo.name)}`, photo, {
-    //   access: "public",
-    // });
+   
     const extension = path.extname(photo.name);
     const fileName = `${crypto.randomUUID()}${extension}`;
 
@@ -114,15 +57,7 @@ export async function saveResume(values: ResumeValues) {
       access: "public",
     });
 
-    // Meaning:
-
-    // “User removed photo”
-
-    // So:
-
-    // Delete old photo
-
-    // Save null to D
+    
     newPhotoUrl = blob.url;
   } else if (photo === null) {
     if (existingResume?.photoUrl) {

@@ -39,14 +39,7 @@ export default function PersonalInfoForm({ resumeData, setResumeData }:EditorFor
     },
   });
 
-  // useEffect(() => {
-  //   const { unsubscribe } = form.watch(async () => {
-  //     const isValid = await form.trigger();
-  //     if (!isValid) return;
-  //     // update resume data
-  //   });
-  //   return unsubscribe; //means to prevent call back looop call one time only then ends
-  // }, [form]);
+  
 
 
 
