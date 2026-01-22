@@ -49,7 +49,7 @@ export default function WorkInfoform({
     return unsubscribe;
   }, [form, resumeData, setResumeData]);
 
-  // It lets you manage a dynamic array of form fields (workExperiences) — add, remove, and reorder items — while keeping validation and form state in sync.
+  
 
   return (
     <div className="mx-auto max-w-xl space-y-6">

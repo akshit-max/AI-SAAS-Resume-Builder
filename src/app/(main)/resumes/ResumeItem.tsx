@@ -32,28 +32,25 @@ import { deleteResume } from "./action";
 interface ResumeItemProps {
   resume: ResumeServerData;
 }
-//  this if for printting by react to print npm package just follow  tortorial
+
 export default function ResumeItem({ resume }: ResumeItemProps) {
-    //  this is a element of type html initialise with null
-    // ----------------------------------------------------------------------------------------------------------
+   
   const contentRef = useRef<HTMLDivElement>(null);
 
   const reactToPrintFn = useReactToPrint({
     contentRef,
     documentTitle: resume.title || "Resume",
   });
-// -------------------------------------------------------------------------------------------------------------
 
-//  comparing resume formed and upadate time
   const wasUpdated = resume.updatedAt !== resume.createdAt;
 
-// --------------------------show  title, updated / created on , timestamp--------------------------------------------
+
 
   return (
     <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
       <div className="space-y-3">
         <Link
-        //  just move back to the resume using link when user click it open the resume using user id
+       
           href={`/editor?resumeId=${resume.id}`}
           className="inline-block w-full text-center"
         >
@@ -78,15 +75,13 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
 
 
           <ResumePreview
-// -------------------------------------------------------------------------
 
-        //    here resume is server data coming from DB so first we have to map it to convert it in form of resumeata
             resumeData={mapToResumeValues(resume)}
 
-            // ---------------------------------------------------------------------------------------
+            
             
 
-            //  react to print npm package --------------------------------------
+            
             contentRef={contentRef}
             className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg"
           />

@@ -27,10 +27,7 @@ export default function GeneralInfoForm({
       title: "" ,
       description:  "",
     },
-    // defaultValues: {
-    //   title: "" || resumeData.title ,
-    //   description: resumeData.description || "",
-    // },
+   
   });
 
   useEffect(() => {

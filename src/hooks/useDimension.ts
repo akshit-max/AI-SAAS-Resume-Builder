@@ -1,4 +1,3 @@
-// This hook watches a DOM element and always tells you its current size.
 
 import React, { useEffect, useState } from "react";
 

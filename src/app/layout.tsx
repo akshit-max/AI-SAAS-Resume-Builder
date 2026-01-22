@@ -9,23 +9,13 @@ const inter=Inter({
   subsets: ["latin"],
 });
 
-// type RootLayoutProp={
-//   children:React.ReactNode;
-// }
+
 interface RootLayoutProp{
   children:React.ReactNode;
   
 }
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata: Metadata = {
   title:{
@@ -36,7 +26,7 @@ export const metadata: Metadata = {
     "AI Resume Builder is the easiest way to create a professional resume that will help you land your dream job.",
 };
 
-// export default function RootLayout({ children}: Readonly<{children: React.ReactNode;}>) {
+
 export default function RootLayout({ children}: Readonly<RootLayoutProp>) {
   return (
     <ClerkProvider>

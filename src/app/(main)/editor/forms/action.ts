@@ -1,14 +1,13 @@
 "use server";
 
 import openai from "@/lib/openai";
-// import { canUseAITools } from "@/lib/permissions";
-// import { getUserSubscriptionLevel } from "@/lib/subscription";
+
 import {
   GenerateSummaryInput,
   generateSummarySchema,
-    GenerateWorkExperienceInput,
-    generateWorkExperienceSchema,
-    WorkExperience,
+  GenerateWorkExperienceInput,
+  generateWorkExperienceSchema,
+  WorkExperience,
 } from "@/lib/validation";
 import { auth } from "@clerk/nextjs/server";
 
@@ -20,12 +19,6 @@ export async function generateSummary(input: GenerateSummaryInput) {
     throw new Error("Unauthorized");
   }
 
-  //   const subscriptionLevel = await getUserSubscriptionLevel(userId);
-
-  //   if (!canUseAITools(subscriptionLevel)) {
-  //     throw new Error("Upgrade your subscription to use this feature");
-  //   }
-  // this is for validadtion here parse dont mean we convert to string
   const { jobTitle, workExperiences, educations, skills } =
     generateSummarySchema.parse(input);
 
@@ -54,7 +47,7 @@ export async function generateSummary(input: GenerateSummaryInput) {
         ${exp.description || "N/A"}
         `,
       )
-      //   this join array elemnts by 2 empty lines
+
       .join("\n\n")}
 
 
@@ -90,8 +83,6 @@ export async function generateSummary(input: GenerateSummaryInput) {
     ],
   });
 
-  //    gpt generate many repsponses on single input so just get first elemnet of ararys of responses
-
   const aiResponse = completion.choices[0].message.content;
 
   if (!aiResponse) {
@@ -100,10 +91,6 @@ export async function generateSummary(input: GenerateSummaryInput) {
 
   return aiResponse;
 }
-
-// --------------------------------------------------------
-
-
 
 // ---------------generate work exp-------------------------------------
 export async function generateWorkExperience(
@@ -114,8 +101,6 @@ export async function generateWorkExperience(
   if (!userId) {
     throw new Error("Unauthorized");
   }
-
-
 
   const { description } = generateWorkExperienceSchema.parse(input);
 
@@ -156,13 +141,6 @@ export async function generateWorkExperience(
   }
 
   console.log("aiResponse", aiResponse);
-
-
-  // 🔑 Short answer
-
-// 👉 This code converts raw AI text into a structured object.
-// 👉 It does NOT put it into the form yet.
-// 👉 It prepares the data so the form can accept it.
 
   return {
     position: aiResponse.match(/Job title: (.*)/)?.[1] || "",

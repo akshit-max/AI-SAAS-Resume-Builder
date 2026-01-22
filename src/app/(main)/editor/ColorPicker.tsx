@@ -7,9 +7,7 @@ import {
 import { PaletteIcon } from "lucide-react";
 import { useState } from "react";
 import { Color, ColorChangeHandler, TwitterPicker } from "react-color";
-// import usePremiumModal from "@/hooks/usePremiumModal";
-// import { canUseCustomizations } from "@/lib/permissions";
-// import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
+
 
 interface ColorPickerProps {
   color: Color | undefined;

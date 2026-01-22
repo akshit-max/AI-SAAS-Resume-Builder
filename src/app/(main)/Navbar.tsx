@@ -7,24 +7,18 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../assets/logo.png";
-import { FileText } from "lucide-react"; 
+import { FileText,Sparkles  } from "lucide-react"; 
 
 export default function Navbar() {
   const { theme } = useTheme();
 
   return (
     <header className="shadow-sm">
-      <div className="max-w-8xl mx-auto flex items-center justify-between gap-3 p-3">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 p-3">
         <Link href="/" className="flex items-center gap-2">
-          {/* <Image
-            src={logo}
-            alt="Logo"
-            width={35}
-            height={35}
-            className="rounded-full"
-          /> */}
+        
            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-            <FileText className="h-6 w-6 text-white" />
+            <Sparkles  className="h-6 w-6 text-white" />
           </div>
 
           <span className="text-xl font-bold tracking-tight">
@@ -32,15 +26,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-         {/* <Link href="/resumes" className="flex items-center gap-2"> 
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-            <FileText className="h-6 w-6 text-white" />
-          </div>
-          <span className=" text-gray-900 dark:text-white text-xl font-bold tracking-tight">
-             AI Resume Builder
-          </span>
-        </div>
-        </Link> */}
+        
 
         <div className="flex items-center gap-3">
           <ModeToggle />
@@ -55,13 +41,7 @@ export default function Navbar() {
               },
             }}
           >
-            <UserButton.MenuItems>
-              <UserButton.Link
-                label="Billing"
-                labelIcon={<CreditCard className="size-4" />}
-                href="/billing"
-              />
-            </UserButton.MenuItems>
+            
           </UserButton>
         </div>
       </div>

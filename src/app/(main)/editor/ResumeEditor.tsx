@@ -14,18 +14,16 @@ import useUnloadWarning from "@/hooks/useUnloadWarning";
 import useAutoSaveResume from "./useAutoSaveResume";
 import { ResumeServerData } from "@/lib/types";
 
-// export default function ResumeEditor() {
-// const [resumeData, setResumeData] = useState<ResumeValues>();
+
 interface ResumeEditorProps {
   resumeToEdit: ResumeServerData | null;
 }
 
 export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
 
-  //  related to ui/ux
 
   const[showSmResumePreview,setshowSmResumePreview]=useState(false);
-  // -----------------------------------
+  
 
   
   const [resumeData, setResumeData] = useState<ResumeValues>(
@@ -44,38 +42,16 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
     educations: [],
     summary: "",
   });
-  // const [resumeData, setResumeData] = useState<ResumeValues>({
-  //   title: "",
-  //   description: "",
-  //   firstName: "",
-  //   lastName: "",
-  //   jobTitle: "",
-  //   city: "",
-  //   country: "",
-  //   phone: "",
-  //   email: "",
-  //   photo: undefined,
-  //   workExperiences: [],
-  //   educations: [],
-  //   summary: "",
-  // });
-
+ 
 
   // ------------------------------->for auto saving<-------------------------------------------------
-  // destructure (isSaving,hasUnsavedChanges) from useautosave resume by giving resumedata
   const{isSaving,hasUnsavedChanges}=useAutoSaveResume(resumeData)
-  // give warning if unsaved changes
   useUnloadWarning(hasUnsavedChanges);
 
   
-// --------------------------------------------------------------------------------------------------
-  
-  // ----------------->Core Logic---------------------------->
   // search from url
   const searchParams = useSearchParams();
 
-  //  if get the step from url its ok  otherwise take arrays first element step  /editor?step=personal
-  // it will not get step in url at very beginning so steps[0].key to check take step[1].key
   const currentStep = searchParams.get("step") || steps[0].key;
   function setCurrentStep(step: string) {
     setStep(step);
@@ -92,8 +68,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   )?.component;
 
 
-  // useUnloadWarning();// for unsaved changes
-  // ----------------->Core Logic Ends---------------------------->
+ 
 
   // --------------->preview data----------------------------------->
 
@@ -112,7 +87,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
       <main className="relative grow">
         <div className="absolute top-0 bottom-0 flex w-full">
           <div className={cn("w-full space-y-6 overflow-y-auto md:w-1/2 md:border-r md:block",showSmResumePreview && "hidden")}>
-            {/* if form component exists render it */}
+           
             <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
             {FormComponent && (
               <FormComponent
@@ -131,9 +106,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
            
           />
         </div>
-         {/* <div className="hidden w-1/2 p-4 md:flex overflow-y-auto">
-            <pre>{JSON.stringify(resumeData, null, 2)}</pre>
-          </div>  */}
+         
        
       </main>
 

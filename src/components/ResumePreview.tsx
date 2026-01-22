@@ -9,15 +9,13 @@ import { Badge } from "./ui/badge";
 
 interface ResumePreviewProps {
   resumeData: ResumeValues;
-  //  react to print npm package --------------------------------------
   contentRef?: React.Ref<HTMLDivElement>; 
-  // ----------------------------------------------------
   className?: string;
 }
 
 export default function ResumePreview({
   resumeData,
-  //  react to print npm package --------------------------------------
+  
   contentRef, 
   className,
 }: ResumePreviewProps) {
@@ -39,7 +37,7 @@ export default function ResumePreview({
             zoom: (1 / 794) * width,
           }}
 
-          //  react to print npm package --------------------------------------
+          
           ref={contentRef}
           id="resumePreviewContent"
       >
@@ -49,7 +47,7 @@ export default function ResumePreview({
         <EducationSection resumeData={resumeData} />
         <SkillsSection resumeData={resumeData} />
 
-        {/*  after creating all above section then move to colorhex and bordercolor */}
+       
       </div>
     </div>
   );
@@ -74,31 +72,14 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
     borderStyle,
   } = resumeData;
 
-  // const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
-  // ------------------------------------------------------><------------------------------------------------------------------------------
-  // if photo is a file this func convert it into string url
-  // if photo is a file first we have to generate the url of it as backend want its url and if ita a file then just use it
-  //  photo instanceof File ---->it means photo is a file
-  //  then its url is set in photo src just like normal
-
-  // useEffect(() => {
-  //   const objectUrl = photo instanceof File ? URL.createObjectURL(photo) : "";
-  //   if (objectUrl) setPhotoSrc(objectUrl);
-  //   if (!photo) setPhotoSrc("");
-  //   return () => URL.revokeObjectURL(objectUrl);
-  // }, [photo]);
-
-  // useEffect(() => {
+  
     const photoSrc =
       photo instanceof File
         ? URL.createObjectURL(photo)
         : typeof photo === "string"
           ? photo
           : "";
-  // }, [photo]);
-
   
-  //  render photo if exists
   return (
     <div className="flex items-center gap-6">
       {photoSrc && (

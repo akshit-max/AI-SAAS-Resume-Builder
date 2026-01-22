@@ -22,10 +22,10 @@ import { EditorFormProps } from "@/lib/types";
 import { set } from "zod";
 
 export default function PersonalInfoForm({ resumeData, setResumeData }:EditorFormProps) {
-  // ✅ ref required to reset file input
+  
   const photoInputRef = useRef<HTMLInputElement | null>(null);
 
-  // ✅ form setup
+  
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
@@ -39,15 +39,6 @@ export default function PersonalInfoForm({ resumeData, setResumeData }:EditorFor
     },
   });
 
-  // useEffect(() => {
-  //   const { unsubscribe } = form.watch(async () => {
-  //     const isValid = await form.trigger();
-  //     if (!isValid) return;
-  //     // update resume data
-  //   });
-  //   return unsubscribe; //means to prevent call back looop call one time only then ends
-  // }, [form]);
-
 
 
   // ------------------------------>to update resumedata and values-------------------->
@@ -58,14 +49,11 @@ export default function PersonalInfoForm({ resumeData, setResumeData }:EditorFor
       setResumeData({...resumeData,...values })
       // update resume data
     });
-    return unsubscribe; //means to prevent call back looop call one time only then ends
+    return unsubscribe; 
   }, [form,resumeData,setResumeData ]);
 
   
 
-
-  //  after too applying color and border color we do this not at the beginning
-  // const photoInputRef=useRef<HTMLInputElement>(null);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -92,7 +80,6 @@ export default function PersonalInfoForm({ resumeData, setResumeData }:EditorFor
                       ref={photoInputRef}
                       type="file"
                       accept="image/*"
-                      // most imp logic to add file send to zod for validadtion
                       onChange={(e) => {
                         const file = e.target.files?.[0];
                         field.onChange(file);
