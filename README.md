@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Resume Builder
 
-## Getting Started
+A full-stack SaaS-style web application that helps users create, edit, and manage professional resumes efficiently using AI-assisted content generation and real-time auto-save.
 
-First, run the development server:
+The project focuses on **user experience, data consistency, and clean system architecture**, rather than just AI usage.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Step-by-step resume editor with live preview
+- AI-assisted generation for summaries and experience sections
+- Real-time auto-save with debouncing
+- Secure user authentication
+- Resume photo uploads with preview handling
+- Manage multiple resumes per user
+- Persistent storage with structured resume data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧠 Architecture Overview
 
-To learn more about Next.js, take a look at the following resources:
+The application is designed as a **modular full-stack system**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Users authenticate and access a personal dashboard
+2. Resume data is edited in a multi-step form
+3. Client-side state changes are debounced
+4. Updates are persisted via secure server actions
+5. AI generation requests are handled server-side
+6. Media uploads are stored separately from resume data
+7. Live preview reflects saved state in real time
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> The system prioritizes data integrity and smooth UX over aggressive feature expansion.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠 Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend:** React, Next.js
+- **Backend:** Next.js Server Actions
+- **Database:** PostgreSQL
+- **ORM:** Prisma
+- **Authentication:** Clerk
+- **AI Integration:** OpenAI API
+- **Media Storage:** Blob / object storage
+
+---
+
+## ⚙️ Key Design Decisions
+
+- Implemented **auto-save with debouncing** to reduce unnecessary database writes
+- Kept AI generation **server-side** for security and control
+- Stored resume data in **structured schemas** instead of free text
+- Uploaded images to object storage instead of the database
+- Focused on reproducibility and clean data flow over feature volume
+
+---
+
+## 🔐 Security & Data Ownership
+
+- All resume operations are scoped to authenticated users
+- Server actions validate ownership before database access
+- Media uploads return public URLs without exposing credentials
+- AI requests are validated and sanitized server-side
+
+---
+
+## ⚠️ Limitations
+
+- Designed for individual users (no team collaboration yet)
+- Free-tier services used during development
+- No resume version history or collaboration features
+
+---
+
+## 🔮 Future Improvements
+
+- Resume version history and change tracking
+- Advanced AI customization controls
+- More export formats and templates
+- Role-based access and sharing
+- Paid plan and subscription support
+
+---
+
+## 📌 Purpose
+
+This project was built to simulate a **real-world SaaS product**, combining frontend UX, backend reliability, and controlled AI integration.
+
+It demonstrates practical full-stack engineering, not just AI prompt usage.
+
