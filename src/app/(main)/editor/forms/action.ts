@@ -1,6 +1,8 @@
 "use server";
 
 import openai from "@/lib/openai";
+import { redis } from "@/lib/redis";
+
 
 import {
   GenerateSummaryInput,
@@ -18,6 +20,12 @@ export async function generateSummary(input: GenerateSummaryInput) {
   if (!userId) {
     throw new Error("Unauthorized");
   }
+
+  // 🔒 BLOCK PUBLIC GPT
+ if (process.env.AI_ENABLED !== "true") {
+  throw new Error("AI is disabled in public demo.");
+ }
+
 
   const { jobTitle, workExperiences, educations, skills } =
     generateSummarySchema.parse(input);
@@ -67,6 +75,17 @@ export async function generateSummary(input: GenerateSummaryInput) {
   console.log("systemMessage", systemMessage);
   console.log("userMessage", userMessage);
 
+
+
+// -----Redis----
+const cacheKey = `summary:${userId}`;
+const cached = await redis.get(cacheKey);
+
+if (cached) {
+  return cached as string;
+}
+
+
   // --------------sending to openAI---------------------------
 
   const completion = await openai.chat.completions.create({
@@ -85,6 +104,9 @@ export async function generateSummary(input: GenerateSummaryInput) {
 
   const aiResponse = completion.choices[0].message.content;
 
+  await redis.setex(cacheKey, 3600, aiResponse); // cache for 1 hour
+
+
   if (!aiResponse) {
     throw new Error("Failed to generate AI response");
   }
@@ -101,6 +123,12 @@ export async function generateWorkExperience(
   if (!userId) {
     throw new Error("Unauthorized");
   }
+
+  // 🔒 BLOCK PUBLIC GPT
+if (process.env.AI_ENABLED !== "true") {
+  throw new Error("AI is disabled in public demo.");
+}
+
 
   const { description } = generateWorkExperienceSchema.parse(input);
 
@@ -120,6 +148,15 @@ export async function generateWorkExperience(
   ${description}
   `;
 
+
+  const cacheKey = `workexp:${userId}:${description}`;
+const cached = await redis.get(cacheKey);
+
+if (cached) {
+  return cached as WorkExperience;
+}
+
+
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
@@ -136,17 +173,36 @@ export async function generateWorkExperience(
 
   const aiResponse = completion.choices[0].message.content;
 
+  // if (!aiResponse) {
+  //   throw new Error("Failed to generate AI response");
+  // }
+
+  // console.log("aiResponse", aiResponse);
+
+  // return {
+  //   position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
+  //   company: aiResponse.match(/Company: (.*)/)?.[1] || "",
+  //   description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim(),
+  //   startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
+  //   endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
+  // } satisfies WorkExperience;
+
+
   if (!aiResponse) {
-    throw new Error("Failed to generate AI response");
-  }
+  throw new Error("Failed to generate AI response");
+}
 
-  console.log("aiResponse", aiResponse);
+const parsedResponse = {
+  position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
+  company: aiResponse.match(/Company: (.*)/)?.[1] || "",
+  description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim(),
+  startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
+  endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
+} satisfies WorkExperience;
 
-  return {
-    position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
-    company: aiResponse.match(/Company: (.*)/)?.[1] || "",
-    description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim(),
-    startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
-    endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
-  } satisfies WorkExperience;
+// ✅ SAVE TO REDIS
+await redis.setex(cacheKey, 3600, parsedResponse); // 1 hour
+
+return parsedResponse;
+
 }
