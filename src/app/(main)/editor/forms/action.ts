@@ -1,6 +1,6 @@
 "use server";
 
-import openai from "@/lib/openai";
+import groq from "@/lib/groq";
 import { redis } from "@/lib/redis";
 
 
@@ -88,19 +88,16 @@ if (cached) {
 
   // --------------sending to openAI---------------------------
 
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: systemMessage,
-      },
-      {
-        role: "user",
-        content: userMessage,
-      },
-    ],
-  });
+ 
+
+  const completion = await groq.chat.completions.create({
+  model: "llama-3.1-8b-instant",
+  messages: [
+    { role: "system", content: systemMessage },
+    { role: "user", content: userMessage },
+  ],
+});
+
 
   const aiResponse = completion.choices[0].message.content;
 
@@ -157,35 +154,18 @@ if (cached) {
 }
 
 
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: systemMessage,
-      },
-      {
-        role: "user",
-        content: userMessage,
-      },
-    ],
-  });
+
+  const completion = await groq.chat.completions.create({
+  model: "llama-3.1-8b-instant",
+  messages: [
+    { role: "system", content: systemMessage },
+    { role: "user", content: userMessage },
+  ],
+});
+
 
   const aiResponse = completion.choices[0].message.content;
 
-  // if (!aiResponse) {
-  //   throw new Error("Failed to generate AI response");
-  // }
-
-  // console.log("aiResponse", aiResponse);
-
-  // return {
-  //   position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
-  //   company: aiResponse.match(/Company: (.*)/)?.[1] || "",
-  //   description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim(),
-  //   startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
-  //   endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
-  // } satisfies WorkExperience;
 
 
   if (!aiResponse) {
